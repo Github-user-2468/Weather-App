@@ -275,6 +275,27 @@ public class WeatherService
         }
     }
 
+    // Retrieves the nearest radar station for a location
+    public async Task<string> GetRadarStation(double lat, double lon)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("WeatherApp/1.0 (your-email@example.com)");
 
+            // Get the points data
+            string pointsUrl = $"https://api.weather.gov/points/{lat},{lon}";
+            HttpResponseMessage response = await client.GetAsync(pointsUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string json = await response.Content.ReadAsStringAsync();
+                var data = JObject.Parse(json);
+
+                // Extract radar station ID
+                return data["properties"]["radarStation"]?.ToString();
+            }
+        }
+        return null; // Return null if anything fails
+    }
 }
     

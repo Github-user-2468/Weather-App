@@ -48,8 +48,11 @@
             this.Celsiusbtn = new System.Windows.Forms.Button();
             this.WeatherIcon = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.RadarPictureBox = new System.Windows.Forms.PictureBox();
+            this.RadarBTN = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WeatherIcon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RadarPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // Citylabel
@@ -220,7 +223,7 @@
             // 
             this.Fahrenheitbtn.BackColor = System.Drawing.Color.White;
             this.Fahrenheitbtn.Location = new System.Drawing.Point(880, 11);
-            this.Fahrenheitbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Fahrenheitbtn.Margin = new System.Windows.Forms.Padding(2);
             this.Fahrenheitbtn.Name = "Fahrenheitbtn";
             this.Fahrenheitbtn.Size = new System.Drawing.Size(29, 23);
             this.Fahrenheitbtn.TabIndex = 25;
@@ -231,7 +234,7 @@
             // Celsiusbtn
             // 
             this.Celsiusbtn.Location = new System.Drawing.Point(924, 10);
-            this.Celsiusbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Celsiusbtn.Margin = new System.Windows.Forms.Padding(2);
             this.Celsiusbtn.Name = "Celsiusbtn";
             this.Celsiusbtn.Size = new System.Drawing.Size(29, 24);
             this.Celsiusbtn.TabIndex = 26;
@@ -243,7 +246,7 @@
             // 
             this.WeatherIcon.BackColor = System.Drawing.Color.Transparent;
             this.WeatherIcon.Location = new System.Drawing.Point(145, 75);
-            this.WeatherIcon.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.WeatherIcon.Margin = new System.Windows.Forms.Padding(2);
             this.WeatherIcon.Name = "WeatherIcon";
             this.WeatherIcon.Size = new System.Drawing.Size(67, 60);
             this.WeatherIcon.TabIndex = 27;
@@ -258,12 +261,32 @@
             this.flowLayoutPanel2.TabIndex = 28;
             this.flowLayoutPanel2.WrapContents = false;
             // 
+            // RadarPictureBox
+            // 
+            this.RadarPictureBox.Location = new System.Drawing.Point(448, 65);
+            this.RadarPictureBox.Name = "RadarPictureBox";
+            this.RadarPictureBox.Size = new System.Drawing.Size(166, 124);
+            this.RadarPictureBox.TabIndex = 29;
+            this.RadarPictureBox.TabStop = false;
+            // 
+            // RadarBTN
+            // 
+            this.RadarBTN.Location = new System.Drawing.Point(488, 202);
+            this.RadarBTN.Name = "RadarBTN";
+            this.RadarBTN.Size = new System.Drawing.Size(75, 23);
+            this.RadarBTN.TabIndex = 30;
+            this.RadarBTN.Text = "View Radar";
+            this.RadarBTN.UseVisualStyleBackColor = true;
+            this.RadarBTN.Click += new System.EventHandler(this.RadarBTN_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1009, 587);
+            this.Controls.Add(this.RadarBTN);
+            this.Controls.Add(this.RadarPictureBox);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.WeatherIcon);
             this.Controls.Add(this.Celsiusbtn);
@@ -286,6 +309,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WeatherIcon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RadarPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,6 +337,8 @@
         private System.Windows.Forms.Button Celsiusbtn;
         private System.Windows.Forms.PictureBox WeatherIcon;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.PictureBox RadarPictureBox;
+        private System.Windows.Forms.Button RadarBTN;
     }
 }
 

@@ -14,14 +14,10 @@ namespace Weather_App
 {
     public partial class Form1 : Form
     {
-
-       
-      
-
+        private Image fullSizeRadarImage;
         private Color initialColor = ColorTranslator.FromHtml("#173253");
         private Color intialEndColor = ColorTranslator.FromHtml("#6889a8");
         private string currentTemperatureUnit = "Fahrenheit";
-
 
         public Form1()
         {
@@ -29,13 +25,13 @@ namespace Weather_App
             PopulateStatesComboBox();
             this.BackColor = Color.White;
 
-
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.DoubleBuffered = true;
 
-
+            RadarPictureBox.Visible = false;
+            RadarBTN.Visible = false;
         }
 
 
@@ -141,6 +137,22 @@ namespace Weather_App
                 else
                 {
                     MessageBox.Show("Failed to fetch weather data.");
+                }
+
+                // Fetch and display the radar image
+                string radarStation = await weatherService.GetRadarStation(lat, lon);
+                if (!string.IsNullOrEmpty(radarStation))
+                {
+                    string radarUrl = $"https://radar.weather.gov/ridge/standard/{radarStation}_0.gif";
+                    await LoadRadarImage(radarUrl);
+
+                    // Show the radar PictureBox and enlarge button
+                    RadarPictureBox.Visible = true;
+                    RadarBTN.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show("Radar station not found.");
                 }
             }
             else
@@ -387,12 +399,10 @@ namespace Weather_App
         }
 
         // Converts Celsius to Fahrenheit
-
         private double CelsiusToFahrenheit(double celsius)
         {
             return (celsius * 9 / 5) + 32;
         }
-        
         
         private void Celsiusbtn_Click(object sender, EventArgs e)
         {
@@ -453,7 +463,6 @@ namespace Weather_App
                     }
                 }
             }
-
 
             // Update the main temperature display
             string mainTempText = templabel1.Text.Replace("°", "").Trim();
@@ -545,6 +554,51 @@ namespace Weather_App
 
             flowLayoutPanel2.Width = totalPanelWidth;
             flowLayoutPanel2.Left = (containerWidth - totalPanelWidth) / 2;
+        }
+
+        //---------------------------------- RADAR ---------------------------------------------//
+        // Load radar image fetched from Searchbutton_Click
+        private async Task LoadRadarImage(string url)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // Download the image as a byte array
+                    byte[] imageData = await client.GetByteArrayAsync(url);
+
+                    // Convert the byte array into a MemoryStream
+                    using (var ms = new System.IO.MemoryStream(imageData))
+                    {
+                        // Store full-size image
+                        fullSizeRadarImage = Image.FromStream(ms);
+
+                        // Scale image for small PictureBox display
+                        RadarPictureBox.Image = new Bitmap(fullSizeRadarImage, new Size(200, 150));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load radar image: " + ex.Message);
+            }
+        }
+
+        // Enlarge Radar image in a new form 
+        private void RadarBTN_Click(object sender, EventArgs e)
+        {
+            if (fullSizeRadarImage != null)
+            {
+                // Create new for to display the full sized radar
+                RadarViewerForm viewer = new RadarViewerForm(fullSizeRadarImage);
+
+                // Open the form
+                viewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("Radar image not loaded yet.");
+            }
         }
     }
 }
